@@ -1,26 +1,30 @@
 import Image from "next/image";
-import fond from "../../public/fond.png";
-import woman from "../../public/woman.png";
-import Header from "../Header/Header";
-import { Box,Text , Heading } from "@chakra-ui/react";
+import fond from "../../public/Fond_.png";
+import { Box, Heading, Flex } from "@chakra-ui/react";
 
 const Acceuil = () => {
   return (
-    <>
-      <Header />
-      <Box textAlign="left" p="4">
-      <Heading as="h1" fontSize="4xl">
-        PLANTEZ LES GRAINES{" "}
-        <Text as="span" color="green.500">
-          DE VOTRE SUCCÈS
-        </Text>
-      </Heading>
-      <Text fontSize="lg" mt="4">
-        La plateforme qui réconcilie vos ambitions et celles de la planète
-      </Text>
-    </Box>
-    </>
-  )
-}
+    <Flex
+      bg='black'
+      width='100vm'
+      height='90vh'
+      position='relative'
+      color='white'
+      justifyContent='center'
+      flexDirection='column'
+    >
+      <Image alt='Fond' src={fond} layout='fill' objectFit='cover' />
+      <Box ml='3rem' position='absolute' width='50%'>
+        <Heading size='2xl' mb='4'>
+          PLANTEZ LES GRAINES<br/> <span style={{ color: "green" }}>DE VOTRE SUCCÈS</span>
+        </Heading>
+        <Heading size='xl'>
+          La plateforme qui réconcilie vos
+          <br /> ambitions et celles de la planète
+        </Heading>
+      </Box>
+    </Flex>
+  );
+};
 
 export default Acceuil;

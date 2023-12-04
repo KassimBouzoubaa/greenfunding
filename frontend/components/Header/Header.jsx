@@ -13,7 +13,7 @@ const Header = () => (
     color='white'
   >
     <Image src={logo} alt='Logo' style={{ width: '20%'}}/>
-    <ConnectButton label="Se connecter"/>
+    <ConnectButton label="Connexion"/>
   </Flex>
 );
 

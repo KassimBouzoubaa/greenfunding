@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body>
         <WagmiConfig config={wagmiConfig}>
-          <RainbowKitProvider chains={chains} theme={darkTheme({accentColor: "green"})} >
+          <RainbowKitProvider chains={chains} theme={darkTheme({accentColor: "green" })}  >
             <ChakraProvider>{children}</ChakraProvider>
           </RainbowKitProvider>
         </WagmiConfig>
