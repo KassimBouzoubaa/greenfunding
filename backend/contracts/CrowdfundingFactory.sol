@@ -5,7 +5,7 @@ import "./NFTContributor.sol";
 import "./Crowdfunding.sol";
 
 contract CrowdfundingFactory {
-    address[] public deployedCampaigns;
+    Crowdfunding[] public deployedCampaigns;
     NFTContributor public nftContract;
     mapping(address => bool) public gotNft;
     mapping(address => bool) public contributedStatus;
@@ -39,7 +39,8 @@ contract CrowdfundingFactory {
         string calldata projectTitle,
         string memory projectDes
     ) external {
-        address newCampaign = address(
+        require(minimumContribution <= goal, "La contribution minimum depasse l'objectif.");
+        Crowdfunding newCampaign = 
             new Crowdfunding(
                 deployedCampaigns.length,
                 goal,
@@ -49,8 +50,8 @@ contract CrowdfundingFactory {
                 projectTitle,
                 projectDes,
                 address(this)
-            )
-        );
+            );
+        
         deployedCampaigns.push(newCampaign);
         emit CampaignCreated(
             goal,
@@ -62,15 +63,15 @@ contract CrowdfundingFactory {
         );
     }
 
-    function getDeployedCampaigns() external view returns (address[] memory) {
-        return deployedCampaigns;
-    }
-
     function mintNft() external {
         require(contributedStatus[msg.sender], "you haven't contributed yet");
         require(!gotNft[msg.sender], "You have already mint");
         nftContract.mint(msg.sender);
         gotNft[msg.sender] = true;
+    }
+
+    function getDeployedCampaigns() external view returns(Crowdfunding[] memory) {
+        return deployedCampaigns;
     }
 
 }

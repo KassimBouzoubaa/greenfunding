@@ -6,12 +6,28 @@ import {
   Stack,
   Text,
   Flex,
+  Button,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import arbreImage from "../../public/arbre.jpg"; // Assurez-vous que le chemin vers votre image est correct
-import plante from "../../public/plante.png"; // Assurez-vous que le chemin vers votre image est correct
+import arbreImage from "../../public/arbre.jpg"; 
+import plante from "../../public/plante.png"; 
+import { ethers } from "ethers";
+import { calculateDifferenceInDays } from "@/app/utils/calculateDifferenceInDays";
+import useMounted from "@/app/hooks/use-mounted";
+import useCheck from "@/app/hooks/use-check";
 
-const CardProject = ({ title, description, goal, raisedAmount, endTime }) => {
+const CardProject = ({ campagn }) => {
+  const {mounted, addCampagnToMounted, removeCampagnFromMounted } = useMounted();
+  const check = useCheck();
+
+  const handleLearnMoreClick = () => {
+    addCampagnToMounted(campagn);
+    check.write();
+  };
+  
+
+  const differenceDays = calculateDifferenceInDays(parseInt(campagn[4]), new Date().getTime() / 1000);
+  
   return (
     <Card maxW='sm'>
       <CardBody>
@@ -24,22 +40,21 @@ const CardProject = ({ title, description, goal, raisedAmount, endTime }) => {
           />
         </Box>
         <Stack mt='6' spacing='3'>
-          <Heading size='md'>Titre du projet</Heading>
-          <Text>
-            This sofa is perfect for modern tropical spaces, baroque inspired
-            spaces, earthy toned spaces and for people who love a chic design
-            with a sprinkle of vintage design.
-          </Text>
+          <Heading size='md'>{campagn[7]}</Heading>
+          <Text>{campagn[8]}</Text>
           <Flex justifyContent='space-between' alignItems='center'>
-            <Flex  alignItems='center' >
+            <Flex alignItems='center'>
               <Image src={plante} alt='plante' width={20} height={10} />
               <Text pl='1rem' color='grey' fontSize='sm'>
-                3/10 ETH
+                {ethers.formatEther(campagn[2])}/{ethers.formatEther(campagn[1])} ETH
               </Text>
             </Flex>
 
-            <Text color='grey' fontSize='sm'>J-9</Text>
+            <Text color='grey' fontSize='sm'>
+              J-{differenceDays}
+            </Text>
           </Flex>
+          <Button colorScheme="green" onClick={handleLearnMoreClick}>En savoir plus</Button>
         </Stack>
       </CardBody>
     </Card>

@@ -76,17 +76,16 @@ describe("NFTContributor tests", function () {
       expect(afterDeployedCampaigns.length).to.equal(1);
     });
     it("L'evenement CampaignCreated a bien fonctionné.", async function () {
-        await expect(
-         this.crowdfundingFactory.createCampaign(
-          10,
-          20,
-          1,
-          "Title",
-          "Desc"
-        )
+      await expect(
+        this.crowdfundingFactory.createCampaign(10, 20, 1, "Title", "Desc")
       )
         .to.emit(this.crowdfundingFactory, "CampaignCreated")
         .withArgs(10, 20, 1, this.owner.address, "Title", "Desc");
+    });
+    it("La création est refué si la contribution minimum dépasse l'objectif", async function () {
+      await expect(
+        this.crowdfundingFactory.createCampaign(10, 20, 11, "Title", "Desc")
+      ).to.be.revertedWith("La contribution minimum depasse l'objectif.");
     });
   });
   // ::::::::::::: Mint NFT ::::::::::::: //
@@ -114,8 +113,8 @@ describe("NFTContributor tests", function () {
       await this.crowdfunding.contribute({ value: ethers.parseEther("2.0") });
       await this.crowdfundingFactory.mintNft();
 
-      expect(await this.crowdfundingFactory.gotNft(this.owner.address)).to.be.true
-
+      expect(await this.crowdfundingFactory.gotNft(this.owner.address)).to.be
+        .true;
     });
   });
 });

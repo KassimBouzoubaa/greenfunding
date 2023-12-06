@@ -28,7 +28,7 @@ contract Crowdfunding {
     CrowdfundingFactory public crowdFundingFactory;
     mapping(address => uint) public contributions;
 
-    event ContributionMade(address contributor, uint amount);
+    event ContributionMade(address contributor, uint amount, uint date);
     event GoalReached(uint totalAmount);
     event CampaignExpired();
     event WithdrawContributor(address contributor, uint amount);
@@ -82,7 +82,7 @@ contract Crowdfunding {
         contributions[msg.sender] += msg.value;
         campaign.raisedAmount += msg.value;
         crowdFundingFactory.hasContributed(msg.sender, address(this));
-        emit ContributionMade(msg.sender, msg.value);
+        emit ContributionMade(msg.sender, msg.value, block.timestamp);
     }
 
     function checkFundingCompleteOrExpire() public returns (State) {

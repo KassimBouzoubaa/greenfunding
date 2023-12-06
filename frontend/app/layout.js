@@ -6,6 +6,8 @@ import { darkTheme, getDefaultWallets, RainbowKitProvider } from "@rainbow-me/ra
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { hardhat } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
+import { AppContextWrapper } from "./context/app-context";
+
 
 const { chains, publicClient } = configureChains([hardhat], [publicProvider()]);
 const { connectors } = getDefaultWallets({
@@ -25,7 +27,10 @@ export default function RootLayout({ children }) {
       <body>
         <WagmiConfig config={wagmiConfig}>
           <RainbowKitProvider chains={chains} theme={darkTheme({accentColor: "green" })}  >
+          <AppContextWrapper>
+
             <ChakraProvider>{children}</ChakraProvider>
+          </AppContextWrapper>
           </RainbowKitProvider>
         </WagmiConfig>
       </body>

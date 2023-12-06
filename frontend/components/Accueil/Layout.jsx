@@ -3,8 +3,14 @@ import Right from "./Right";
 import Left from "./Left";
 import { Flex } from "@chakra-ui/react";
 import ListeCardProject from "../Cards/ListeCardProject";
+import useMounted from "@/app/hooks/use-mounted";
+import ListeContributeurs from "../Contributeurs/ListeContributeurs";
 
 const Layout = () => {
+  const { mounted, addCampagnToMounted, removeCampagnFromMounted } =
+    useMounted();
+
+
   return (
     <Flex
       width='100vw'
@@ -15,9 +21,8 @@ const Layout = () => {
       color='white'
       overflow='auto'
     >
-      <Flex height="100%" width="70%" p="1rem">
-
-      <ListeCardProject />
+      <Flex height='100%' width='70%' p='1rem'>
+        {mounted ? <Left /> : <ListeCardProject />}
       </Flex>
 
       <Right />
