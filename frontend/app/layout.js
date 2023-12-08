@@ -2,12 +2,16 @@
 import { ChakraProvider } from "@chakra-ui/react";
 
 import "@rainbow-me/rainbowkit/styles.css";
-import { darkTheme, getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import {
+  darkTheme,
+  getDefaultWallets,
+  RainbowKitProvider,
+} from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { hardhat } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { AppContextWrapper } from "./context/app-context";
-
+import Header from "./components/Header/Header";
 
 const { chains, publicClient } = configureChains([hardhat], [publicProvider()]);
 const { connectors } = getDefaultWallets({
@@ -26,11 +30,16 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body>
         <WagmiConfig config={wagmiConfig}>
-          <RainbowKitProvider chains={chains} theme={darkTheme({accentColor: "green" })}  >
-          <AppContextWrapper>
-
-            <ChakraProvider>{children}</ChakraProvider>
-          </AppContextWrapper>
+          <RainbowKitProvider
+            chains={chains}
+            theme={darkTheme({ accentColor: "green" })}
+          >
+            <AppContextWrapper>
+              <ChakraProvider>
+                <Header/>
+                {children}
+                </ChakraProvider>
+            </AppContextWrapper>
           </RainbowKitProvider>
         </WagmiConfig>
       </body>

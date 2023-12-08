@@ -1,7 +1,7 @@
 const hre = require("hardhat");
 
 async function main() {
-  const baseUri = "ipfs://QmdWVnktgGkY8uUhUEngo3XC1zmJsHJ8KSr2vrPXDtDXaU/";
+  const baseUri = "ipfs://QmWKN6dbb6ffVCDbXnqPHNnyTaZyc9mo4S36TAGr3uGyXC/";
   const NFTContributor = await ethers.getContractFactory("NFTContributor");
   const nftcontributor = await NFTContributor.deploy(baseUri);
 

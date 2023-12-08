@@ -1,9 +1,9 @@
 import { useAppContext } from "../context/app-context";
 
-const useContribution = () => {
+const useWithdraw = () => {
   const context = useAppContext();
 
-  return context?.contribution;
+  return context?.withdraw;
 };
 
-export default useContribution;
+export default useWithdraw;

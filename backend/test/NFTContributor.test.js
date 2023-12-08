@@ -7,7 +7,7 @@ const { ethers } = require("hardhat");
 describe("NFTContributor tests", function () {
   async function deployContract() {
     const [owner, adr1] = await ethers.getSigners();
-    const baseUri = "ipfs://QmdWVnktgGkY8uUhUEngo3XC1zmJsHJ8KSr2vrPXDtDXaU/";
+    const baseUri = "ipfs://QmWKN6dbb6ffVCDbXnqPHNnyTaZyc9mo4S36TAGr3uGyXC/";
     /* NFT CONTRIBUTOR */
 
     const NFTContributor = await ethers.getContractFactory("NFTContributor");
@@ -76,7 +76,7 @@ describe("NFTContributor tests", function () {
         "Only crowdfundingFactory can call this function"
       );
     });
-    it("Mint accepté si ce n'est pas le contrat crowdfundingFactory qui l'apelle", async function () {
+    it("Mint accepté si c'est le contrat crowdfundingFactory qui l'apelle", async function () {
       await this.crowdfunding.contribute({ value: ethers.parseEther("2.0") });
       await this.crowdfundingFactory.mintNft();
       expect(await this.nftcontributor.totalNfts()).to.equal(1);
@@ -91,7 +91,7 @@ describe("NFTContributor tests", function () {
       );
       await this.crowdfunding.contribute({ value: ethers.parseEther("2.0") });
     });
-    it("Le mapping minted passe a true pour l'adresse qui mint", async function () {
+    it("Le mapping minted passe à true pour l'adresse qui mint", async function () {
       const mintedBeforeMint = await this.nftcontributor.minted(this.owner);
       await this.crowdfundingFactory.mintNft();
       const mintedAfterMint = await this.nftcontributor.minted(this.owner);

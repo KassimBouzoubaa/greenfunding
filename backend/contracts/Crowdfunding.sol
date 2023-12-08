@@ -3,8 +3,11 @@ pragma solidity ^0.8.20;
 
 import "./CrowdfundingFactory.sol";
 
+/**
+ * @title Crowdfunding
+ * @dev Contract to manage individual crowdfunding campaigns.
+ */
 contract Crowdfunding {
-    // Structure pour stocker les détails de la campagne
     struct Campaign {
         uint id;
         uint goal;
@@ -34,6 +37,9 @@ contract Crowdfunding {
     event WithdrawContributor(address contributor, uint amount);
     event WithdrawFunds(address owner, uint amount);
 
+    /**
+     * @dev Modifier to ensure that only the campaign owner can execute certain functions.
+     */
     modifier onlyOwner() {
         require(
             msg.sender == campaign.owner,
@@ -42,12 +48,27 @@ contract Crowdfunding {
         _;
     }
 
+    /**
+     * @dev Modifier to validate the campaign's state.
+     * @param _state Expected state of the campaign.
+     */
     modifier validateExpiry(State _state) {
         checkFundingCompleteOrExpire();
         require(campaign.state == _state, "Invalid state");
         _;
     }
 
+    /**
+     * @dev Constructor to initialize the crowdfunding campaign.
+     * @param _id Identifier for the campaign.
+     * @param _goal Funding goal for the campaign.
+     * @param durationDays Duration of the campaign in days.
+     * @param _minimumContribution Minimum contribution required for the campaign.
+     * @param creator Address of the campaign owner.
+     * @param _projectTitle Title of the project.
+     * @param _projectDes Description of the project.
+     * @param _factoryAddress Address of the CrowdfundingFactory contract.
+     */
     constructor(
         uint _id,
         uint _goal,
@@ -59,9 +80,9 @@ contract Crowdfunding {
         address _factoryAddress
     ) {
         campaign.id = _id;
-        campaign.goal = _goal * 1 ether;
+        campaign.goal = _goal;
         campaign.endTime = block.timestamp + durationDays * 1 days;
-        campaign.minimumContribution = _minimumContribution * 1 ether;
+        campaign.minimumContribution = _minimumContribution;
         campaign.owner = creator;
         campaign.projectTitle = _projectTitle;
         campaign.projectDes = _projectDes;
@@ -69,6 +90,9 @@ contract Crowdfunding {
         crowdFundingFactory = CrowdfundingFactory(_factoryAddress);
     }
 
+    /**
+     * @dev Function for contributors to make contributions to the campaign.
+     */
     function contribute() external payable validateExpiry(State.Fundraising) {
         require(
             block.timestamp < campaign.endTime,
@@ -85,6 +109,10 @@ contract Crowdfunding {
         emit ContributionMade(msg.sender, msg.value, block.timestamp);
     }
 
+    /**
+     * @dev Function to check if the campaign has reached its funding goal or expired.
+     * @return Current state of the campaign.
+     */
     function checkFundingCompleteOrExpire() public returns (State) {
         if (campaign.raisedAmount >= campaign.goal) {
             campaign.state = State.Successful;
@@ -98,10 +126,9 @@ contract Crowdfunding {
         return campaign.state;
     }
 
-    function getContractBalance() external view returns (uint256) {
-        return address(this).balance;
-    }
-
+    /**
+     * @dev Function for contributors to withdraw their contributions when the campaign expires.
+     */
     function withdrawContributor() external validateExpiry(State.Expired) {
         require(contributions[msg.sender] > 0, "You cannot withdraw 0");
         payable(msg.sender).transfer(contributions[msg.sender]);
@@ -109,11 +136,11 @@ contract Crowdfunding {
         contributions[msg.sender] = 0;
     }
 
-    function withdrawFunds()
-        external
-        onlyOwner
-        validateExpiry(State.Successful)
-    {
+    /**
+     * @dev Function for the campaign owner to withdraw the raised funds when the campaign is successful.
+     */
+    function withdrawFunds() external onlyOwner validateExpiry(State.Successful) {
+        require(address(this).balance > 0, "You cannot withdraw 0");
         uint balance = address(this).balance;
         payable(msg.sender).transfer(address(this).balance);
         emit WithdrawFunds(msg.sender, balance);

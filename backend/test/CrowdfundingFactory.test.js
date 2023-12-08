@@ -7,7 +7,7 @@ const { ethers } = require("hardhat");
 describe("NFTContributor tests", function () {
   async function deployContract() {
     const [owner, adr1] = await ethers.getSigners();
-    const baseUri = "ipfs://QmdWVnktgGkY8uUhUEngo3XC1zmJsHJ8KSr2vrPXDtDXaU/";
+    const baseUri = "ipfs://QmWKN6dbb6ffVCDbXnqPHNnyTaZyc9mo4S36TAGr3uGyXC/";
     /* NFT CONTRIBUTOR */
 
     const NFTContributor = await ethers.getContractFactory("NFTContributor");
@@ -82,7 +82,7 @@ describe("NFTContributor tests", function () {
         .to.emit(this.crowdfundingFactory, "CampaignCreated")
         .withArgs(10, 20, 1, this.owner.address, "Title", "Desc");
     });
-    it("La création est refué si la contribution minimum dépasse l'objectif", async function () {
+    it("La création est refusé si la contribution minimum dépasse l'objectif", async function () {
       await expect(
         this.crowdfundingFactory.createCampaign(10, 20, 11, "Title", "Desc")
       ).to.be.revertedWith("La contribution minimum depasse l'objectif.");

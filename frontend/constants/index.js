@@ -239,19 +239,6 @@ export const crowdfundingAbi = [
   },
   {
     "inputs": [],
-    "name": "getContractBalance",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "withdrawContributor",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -486,7 +473,8 @@ export const factoryAbi = [
     "type": "function"
   }
 ]
-export const nftAbi = [{
+export const nftAbi = [
+  {
     "inputs": [
       {
         "internalType": "string",
@@ -786,19 +774,6 @@ export const nftAbi = [{
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "crowdfundingFactory",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -1010,19 +985,6 @@ export const nftAbi = [{
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_contract",
-        "type": "address"
-      }
-    ],
-    "name": "setCrowdFundingFactory",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "bytes4",
         "name": "interfaceId",
         "type": "bytes4"
@@ -1133,7 +1095,7 @@ export const nftAbi = [{
     "stateMutability": "nonpayable",
     "type": "function"
   }
-    ]
+]
   
 export const crowdfundingAddress = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
 export const factoryAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"

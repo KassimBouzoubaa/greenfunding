@@ -8,7 +8,7 @@ const { ethers } = require("hardhat");
 describe("NFTContributor tests", function () {
   async function deployContract() {
     const [owner, adr1] = await ethers.getSigners();
-    const baseUri = "ipfs://QmdWVnktgGkY8uUhUEngo3XC1zmJsHJ8KSr2vrPXDtDXaU/";
+    const baseUri = "ipfs://QmWKN6dbb6ffVCDbXnqPHNnyTaZyc9mo4S36TAGr3uGyXC/";
     /* NFT CONTRIBUTOR */
 
     const NFTContributor = await ethers.getContractFactory("NFTContributor");
@@ -98,12 +98,13 @@ describe("NFTContributor tests", function () {
       await this.nftcontributor.setCrowdFundingFactory(
         this.crowdfundingFactory
       );
-
+      const blockTimeStamp = (await ethers.provider.getBlock("latest"))
+      .timestamp;
       await expect(
-        this.crowdfunding.contribute({ value: ethers.parseEther("2.0") })
+        this.crowdfunding.contribute({ value: ethers.parseEther("2.0")})
       )
         .to.emit(this.crowdfunding, "ContributionMade")
-        .withArgs(this.owner.address, ethers.parseEther("2.0"));
+        .withArgs(this.owner.address, ethers.parseEther("2.0"), blockTimeStamp +1);
     });
   });
   // ::::::::::::: checkFundingCompleteOrExpire ::::::::::::: //
@@ -157,14 +158,6 @@ describe("NFTContributor tests", function () {
         .withArgs();
     });
   });
-  // ::::::::::::: getContractBalance ::::::::::::: //
-  describe("getContractBalance", function () {
-    it("Récupère la balance du contrat", async function () {
-      await this.crowdfunding.contribute({ value: ethers.parseEther("11.0") });
-      const balance = await this.crowdfunding.getContractBalance();
-      expect(balance).to.equal(ethers.parseEther("11.0"));
-    });
-  });
   // ::::::::::::: withdrawContributor ::::::::::::: //
   describe("withdrawContributor", function () {
     beforeEach(async function () {
@@ -194,12 +187,12 @@ describe("NFTContributor tests", function () {
   });
   // ::::::::::::: withdrawFunds ::::::::::::: //
   describe("withdrawFunds", function () {
-    it("L'owner arrive bein à récupérer les fonds du contrat", async function () {
+    it("L'owner arrive bien à récupérer les fonds du contrat", async function () {
       await this.crowdfunding.contribute({ value: ethers.parseEther("11.0") });
       await this.crowdfunding.checkFundingCompleteOrExpire();
-      const balanceBefore = await this.crowdfunding.getContractBalance();
+      const balanceBefore = await ethers.provider.getBalance(this.crowdfunding)
       await this.crowdfunding.withdrawFunds();
-      const balanceAfter = await this.crowdfunding.getContractBalance();
+      const balanceAfter = await ethers.provider.getBalance(this.crowdfunding)
       expect(balanceBefore).to.equal(ethers.parseEther("11.0"));
       expect(balanceAfter).to.equal(ethers.parseEther("0"));
     });
@@ -211,7 +204,7 @@ describe("NFTContributor tests", function () {
         .to.emit(this.crowdfunding, "WithdrawFunds")
         .withArgs(
           await this.owner.address,
-          await this.crowdfunding.getContractBalance()
+          await ethers.provider.getBalance(this.crowdfunding)
         );
     });
   });

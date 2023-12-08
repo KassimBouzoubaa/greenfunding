@@ -1,7 +1,7 @@
 "use client";
-import Acceuil from "@/components/Accueil/Acceuil";
-import Layout from "@/components/Accueil/Layout";
-import Header from "@/components/Header/Header";
+import Acceuil from "@/app/components/Accueil/Acceuil";
+import Layout from "@/app/components/Accueil/Layout";
+import Header from "@/app/components/Header/Header";
 import useConnectedWallet from "./hooks/use-connected-wallet";
 
 
@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <>
-      <Header />
+    
       {connectedWallet?.isConnected ? <Layout /> : <Acceuil />}
     </>
   );
