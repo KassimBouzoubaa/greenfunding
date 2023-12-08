@@ -8,12 +8,12 @@ import {
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { hardhat } from "wagmi/chains";
+import { hardhat, sepolia} from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { AppContextWrapper } from "./context/app-context";
 import Header from "./components/Header/Header";
 
-const { chains, publicClient } = configureChains([hardhat], [publicProvider()]);
+const { chains, publicClient } = configureChains([sepolia], [publicProvider()]);
 const { connectors } = getDefaultWallets({
   appName: "Greenfunding",
   projectId: process.env.WALLET_CONNECT_API_KEY,

@@ -1097,9 +1097,8 @@ export const nftAbi = [
   }
 ]
   
-export const crowdfundingAddress = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
-export const factoryAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
-export const nftAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+export const factoryAddress = "0x031684b3d899C5f669b78a4285c712Ef767aF858"
+export const nftAddress = "0xf82122a7328419b757E92224F9d2504ade036368"
 
 export const baseConfigFactory = {
 	address: factoryAddress,

@@ -20,28 +20,11 @@ async function main() {
 
   await crowdfundingFactory.waitForDeployment();
 
-
-  // ::::::::::::: CROWDFUNDING ::::::::::::: //
-
-  const Crowdfunding = await ethers.getContractFactory("Crowdfunding");
-  const crowdfunding = await Crowdfunding.deploy(
-    0,
-    10,
-    20,
-    1,
-    owner,
-    "Title",
-    "Desc",
-    crowdfundingFactory
-  );
-  await crowdfunding.waitForDeployment();
-
   // ::::::::::::: LOG ::::::::::::: //
 
   console.log(
     `nftcontributor deployed to ${nftcontributor.target},
-    crowdfundingFactory deployed to ${crowdfundingFactory.target},
-    crowdfunding deployed to ${crowdfunding.target}, 
+    crowdfundingFactory deployed to ${crowdfundingFactory.target}, owner : ${owner.address}
     `
   );
 }
