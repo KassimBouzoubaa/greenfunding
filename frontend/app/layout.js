@@ -8,7 +8,7 @@ import {
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { hardhat, sepolia} from "wagmi/chains";
+import { hardhat, sepolia } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { AppContextWrapper } from "./context/app-context";
 import Header from "./components/Header/Header";
@@ -36,9 +36,9 @@ export default function RootLayout({ children }) {
           >
             <AppContextWrapper>
               <ChakraProvider>
-                <Header/>
+                <Header />
                 {children}
-                </ChakraProvider>
+              </ChakraProvider>
             </AppContextWrapper>
           </RainbowKitProvider>
         </WagmiConfig>

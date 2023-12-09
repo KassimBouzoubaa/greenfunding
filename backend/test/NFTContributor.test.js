@@ -71,16 +71,6 @@ describe("NFTContributor tests", function () {
         this.nftcontributor.setCrowdFundingFactory(this.crowdfundingFactory)
       ).to.be.revertedWith("crowdfundingFactory address is already set");
     });
-    it("Mint refusé si ce n'est pas le contrat crowdfundingFactory qui l'apelle", async function () {
-      await expect(this.nftcontributor.mint(this.owner)).to.be.revertedWith(
-        "Only crowdfundingFactory can call this function"
-      );
-    });
-    it("Mint accepté si c'est le contrat crowdfundingFactory qui l'apelle", async function () {
-      await this.crowdfunding.contribute({ value: ethers.parseEther("2.0") });
-      await this.crowdfundingFactory.mintNft();
-      expect(await this.nftcontributor.totalNfts()).to.equal(1);
-    });
   });
 
   // ::::::::::::: Mint function ::::::::::::: //

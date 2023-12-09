@@ -85,14 +85,14 @@ describe("NFTContributor tests", function () {
     it("La création est refusé si la contribution minimum dépasse l'objectif", async function () {
       await expect(
         this.crowdfundingFactory.createCampaign(10, 20, 11, "Title", "Desc")
-      ).to.be.revertedWith("La contribution minimum depasse l'objectif.");
+      ).to.be.revertedWith("Minimum contribution exceeds the goal.");
     });
   });
   // ::::::::::::: Mint NFT ::::::::::::: //
   describe("MintNFT", function () {
     it("Le mint est refusé si le msg.sender n'a pas contribué", async function () {
       await expect(this.crowdfundingFactory.mintNft()).to.be.revertedWith(
-        "you haven't contributed yet"
+        "You haven't contributed yet"
       );
     });
     it("Le mint est refusé si le msg.sender a déjà mint", async function () {
@@ -103,7 +103,7 @@ describe("NFTContributor tests", function () {
       await this.crowdfundingFactory.mintNft();
 
       await expect(this.crowdfundingFactory.mintNft()).to.be.revertedWith(
-        "You have already mint"
+        "You have already minted"
       );
     });
     it("Le mint est refusé si le msg.sender a déjà mint", async function () {

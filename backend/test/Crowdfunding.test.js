@@ -26,9 +26,9 @@ describe("NFTContributor tests", function () {
     const Crowdfunding = await ethers.getContractFactory("Crowdfunding");
     const crowdfunding = await Crowdfunding.deploy(
       0,
-      10,
+      ethers.parseEther("10.0") ,
       20,
-      1,
+      ethers.parseEther("1.0") ,
       owner,
       "Title",
       "Desc",
@@ -169,7 +169,7 @@ describe("NFTContributor tests", function () {
       const contributionBefore = await this.crowdfunding.contributions(
         this.owner.address
       );
-      await this.crowdfunding.withdrawContributor();
+      await this.crowdfunding.withdrawContributor();      
       const contributionAfter = await this.crowdfunding.contributions(
         this.owner.address
       );

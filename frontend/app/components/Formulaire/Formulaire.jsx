@@ -75,7 +75,6 @@ const Formulaire = () => {
     setMinimum("");
     createCampaign.write();
   }
-  console.log("Minimum", minimum);
   return (
     <Flex overflowY='auto' width='100%' height='100%' direction='column'>
       <Stack p='2rem' width='100%' spacing={3}>
