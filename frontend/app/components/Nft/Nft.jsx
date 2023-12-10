@@ -40,9 +40,9 @@ const Nft = () => {
       }),
     onSuccess: () =>
       notification?.({
-        title: "Error",
+        title: "Success",
         description: "Vous avez obtenu un nft",
-        status: "error",
+        status: "success",
       }),
   });
 

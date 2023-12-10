@@ -29,3 +29,6 @@ To get started with GreenFunding:
 3. Ensure you have the necessary dependencies installed for Hardhat, React, and other related packages.
 4. Start the development servers for both backend and frontend.
 5. Connect your wallet and interact with the DApp to explore its functionalities.
+
+Demo link:
+https://www.loom.com/share/d28a1aaaa32d4c7282da91cb3eb34335
